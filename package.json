@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@googlemaps/google-maps-services-js": "^3.4.0",
     "@langchain/core": "^0.2.18",
     "next": "14.2.5",
     "openai": "^4.53.0",

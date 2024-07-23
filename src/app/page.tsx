@@ -10,7 +10,9 @@ export default function Home() {
   const [preferenciasAtividades, setPreferenciasAtividades] = useState('');
   const [orcamentoDisponivel, setOrcamentoDisponivel] = useState('');
   const [necessidadesEspeciais, setNecessidadesEspeciais] = useState('');
-  const [apiKey, setApiKey] = useState('');
+  const [apiKeyOpenAI, setApiKeyOpenAI] = useState('');
+  const [apiKeyGoogleMaps, setApiKeyGoogleMaps] = useState('');
+
   const [roteiro, setRoteiro] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -28,7 +30,8 @@ export default function Home() {
         preferencias_atividades: preferenciasAtividades,
         orcamento_disponivel: orcamentoDisponivel,
         necessidades_especiais: necessidadesEspeciais,
-        apiKey: apiKey
+        apiKeyOpenAI: apiKeyOpenAI,
+        apiKeyGoogleMaps: apiKeyGoogleMaps
       }),
     });
 
@@ -41,13 +44,23 @@ export default function Home() {
       <h1>Gerador de Roteiro de Viagem</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          API:
+          API OpenAI:
           <input
             type="text"
-            value={apiKey}
-            onChange={(e) => setApiKey(e.target.value)}
+            value={apiKeyOpenAI}
+            onChange={(e) => setApiKeyOpenAI(e.target.value)}
           />
         </label>
+        <br></br>
+        <label>
+          API GoogleMaps:
+          <input
+            type="text"
+            value={apiKeyGoogleMaps}
+            onChange={(e) => setApiKeyGoogleMaps(e.target.value)}
+          />
+        </label>
+        <br></br>
         <label>
           Destinos de Interesse:
           <input
@@ -56,6 +69,7 @@ export default function Home() {
             onChange={(e) => setDestinosInteresse(e.target.value)}
           />
         </label>
+        <br></br>
         <label>
           Recomendação de Hospedagem:
           <input
@@ -64,6 +78,7 @@ export default function Home() {
             onChange={(e) => setRecomendacaoHospedagem(e.target.value)}
           />
         </label>
+        <br></br>
         <label>
           Datas:
           <input
@@ -72,6 +87,7 @@ export default function Home() {
             onChange={(e) => setDataInicio(e.target.value)}
           />
         </label>
+        <br></br>
         <label>
           Preferências de Atividades:
           <input
@@ -80,6 +96,7 @@ export default function Home() {
             onChange={(e) => setPreferenciasAtividades(e.target.value)}
           />
         </label>
+        <br></br>
         <label>
           Orçamento Disponível:
           <input
@@ -88,6 +105,7 @@ export default function Home() {
             onChange={(e) => setOrcamentoDisponivel(e.target.value)}
           />
         </label>
+        <br></br>
         <label>
           Necessidades Especiais:
           <input
@@ -96,6 +114,7 @@ export default function Home() {
             onChange={(e) => setNecessidadesEspeciais(e.target.value)}
           />
         </label>
+        <br></br>
         <button type="submit">Gerar Roteiro</button>
       </form>
 
