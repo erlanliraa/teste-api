@@ -4,7 +4,7 @@ import { Card, Spin } from 'antd';
 import { useEffect, useState } from 'react';
 import '../app/css/form.css';
 import './css/home.css';
-import Itinerary from './itinerary/page';
+import Itinerary from '../components/Itinerary';
 import { Provider } from '@/components/Provider';
 import { LoadScript } from '@react-google-maps/api';
 

@@ -4,6 +4,7 @@ import { Card, Descriptions, DescriptionsProps } from 'antd';
 interface Props {
   data: BudgetForAllDays;
   budget?: string;
+  symbol: string
 }
 export function Budget({ data, budget, symbol }: Props) {
   const budgetItems: DescriptionsProps['items'] = [
