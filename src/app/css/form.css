@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
+.form-container,
+.ant-tooltip-inner,
+.custom-input-dropdown .ant-select-item,
+.custom-input-dropdown .ant-select-selection-item,
+.custom-input-dropdown .ant-select-selector,
+.form-item,
+.form-item .ant-form-item-label label,
+.custom-input {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+.form-item .ant-form-item-label label {
+  color: #333;
+  font-weight: lighter;
+  font-size: medium;
+}
+
+.custom-input {
+  width: 100%;
+  padding: 10px;
+  box-shadow: none;
+  transition: border-color 0.3s;
+  border: none;
+  border-bottom: 2px solid #000000;
+  border-radius: 0;
+}
+
+.custom-input::placeholder {
+  color: #616161;
+  font-size: medium;
+}
+
+.custom-input:focus {
+  background-color: transparent;
+  border-color: #707072;
+  outline: none;
+  box-shadow: 0 0 0 0;
+}
+
+.custom-input:hover {
+  transition: all 0.5s;
+  background-color: transparent;
+  border-color: #616161;
+  outline: none;
+}
+
+.custom-input .ant-picker-input > input::placeholder {
+  color: #616161 !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: medium;
+}
+
+.custom-input .ant-picker-suffix {
+  color: #616161; /* Calendar icon color */
+}
+
+.custom-input-dropdown .ant-select-selector {
+  font-weight: 400;
+  font-size: 16px;
+  padding: 8px 12px;
+  border: none !important;
+  border-bottom: 2px solid #000 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.custom-input-dropdown .ant-select-selection-placeholder {
+  color: #616161 !important;
+  font-size: medium !important;
+}
+
+.custom-input-dropdown .ant-select-selector:focus,
+.custom-input-dropdown .ant-select-focused .ant-select-selector {
+  border-color: #616161 !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.custom-input-dropdown .ant-select-selector:hover {
+  border-color: #616161 !important;
+  outline: none !important;
+}
+
+.custom-input-dropdown .ant-select-selection-item {
+  font-weight: 600;
+  color: #333 !important;
+}
+
+.custom-input-dropdown .ant-select-selection-item::before {
+  content: none;
+}
+
+.custom-input-dropdown .ant-select-arrow {
+  color: #333;
+}
+
+.custom-slider .ant-slider-track {
+  background-color: #c0c0c0 !important;
+}
+
+.custom-slider .ant-slider-handle {
+  background-color: #001b43 !important;
+  border-color: #001b43 !important;
+  width: 16px !important;
+  height: 16px !important;
+  margin-left: -8px !important;
+  margin-top: -5px !important;
+}
+
+.custom-slider .ant-slider-handle::after {
+  display: none;
+}
+
+.custom-slider .ant-slider-mark {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: #001b43;
+}
+
+/* Tooltip Styles */
+.ant-tooltip-inner {
+  background-color: #001b43 !important;
+  color: #ffffff !important;
+  border-radius: 12px !important;
+  padding: 8px 12px !important;
+  transform: translateY(70px) !important;
+}
+
+.ant-tooltip-arrow {
+  border-color: #001b43 transparent !important;
+  transform: translateY(200%) rotate(0deg) translateX(-50%) !important; /* Tooltip arrow color */
+}
+
+.custom-slider-input {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: medium;
+  border: 2px solid #000 !important;
+}
+.centered-button .ant-btn {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: #001b43;
+  color: #ffffff;
+  border-radius: 16px;
+  padding: 20px 24px;
+  font-size: 16px;
+  margin-top: 1rem;
+  border: none;
+  box-shadow: none;
+  text-align: center;
+}
+
+.centered-button .ant-btn:hover {
+  background-color: #01275f !important;
+  color: #ffffff;
+  border: none;
+  box-shadow: none;
+}

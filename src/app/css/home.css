@@ -1,0 +1,47 @@
+.Body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+@media (max-width: 800px) {
+  .Box-Foto {
+    flex-direction: column;
+  }
+}
+
+.Box-Foto {
+  width: 80%;
+  display: flex;
+  background: linear-gradient(#fff3e354, #fff3e30e),
+    /* url('../img/back-image.png'); */
+  url('../img/touristic-items-map.jpg');
+  background-size: cover;
+  background-position: center;
+  border-radius: 20px;
+  justify-content: space-between;
+  align-items: center;
+  margin: 48px;
+}
+
+.form {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 50%;
+  height:100%;
+  min-height: 100%;
+  position: relative;
+  padding: 50px;
+
+
+  @media(min-width: 1920px) {
+    margin-right: 2rem;
+  }
+}
+.logo {
+  z-index: 1;
+  width: 50%
+}

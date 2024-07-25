@@ -1,129 +1,68 @@
-// app/page.tsx
 'use client';
+import ItineraryForm, { FieldType } from '@/components/Form';
+import { Card, Spin } from 'antd';
+import { useEffect, useState } from 'react';
+import '../app/css/form.css';
+import './css/home.css';
+import Itinerary from './itinerary/page';
+import { Provider } from '@/components/Provider';
+import { LoadScript } from '@react-google-maps/api';
 
-import { useState } from 'react';
+import { Plus_Jakarta_Sans } from 'next/font/google';
 
+const fontStyle = Plus_Jakarta_Sans({
+  weight: '300',
+  subsets: ['latin'],
+});
 export default function Home() {
-  const [destinosInteresse, setDestinosInteresse] = useState('');
-  const [recomendacaoHospedagem, setRecomendacaoHospedagem] = useState('');
-  const [dataInicio, setDataInicio] = useState('');
-  const [preferenciasAtividades, setPreferenciasAtividades] = useState('');
-  const [orcamentoDisponivel, setOrcamentoDisponivel] = useState('');
-  const [necessidadesEspeciais, setNecessidadesEspeciais] = useState('');
-  const [apiKeyOpenAI, setApiKeyOpenAI] = useState('');
-  const [apiKeyGoogleMaps, setApiKeyGoogleMaps] = useState('');
+  const [domLoaded, setDomLoaded] = useState(false);
+  const [itineraryInfo, setItineraryInfo] = useState<FieldType | null>(null);
 
-  const [roteiro, setRoteiro] = useState('');
+  useEffect(() => {
+    setDomLoaded(true);
+  }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const response = await fetch('/api/gerarRoteiro', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        destinos_interesse: destinosInteresse,
-        recomendacao_hospedagem: recomendacaoHospedagem,
-        data_inicio: dataInicio,
-        preferencias_atividades: preferenciasAtividades,
-        orcamento_disponivel: orcamentoDisponivel,
-        necessidades_especiais: necessidadesEspeciais,
-        apiKeyOpenAI: apiKeyOpenAI,
-        apiKeyGoogleMaps: apiKeyGoogleMaps
-      }),
-    });
-
-    const data = await response.json();
-    setRoteiro(data.roteiro);
-  };
-
+  if (!domLoaded)
+    return (
+      <div className="flex h-full w-full items-center justify-center min-h-screen">
+        <Spin />
+      </div>
+    );
   return (
-    <div>
-      <h1>Gerador de Roteiro de Viagem</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          API OpenAI:
-          <input
-            type="text"
-            value={apiKeyOpenAI}
-            onChange={(e) => setApiKeyOpenAI(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>
-          API GoogleMaps:
-          <input
-            type="text"
-            value={apiKeyGoogleMaps}
-            onChange={(e) => setApiKeyGoogleMaps(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>
-          Destinos de Interesse:
-          <input
-            type="text"
-            value={destinosInteresse}
-            onChange={(e) => setDestinosInteresse(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>
-          Recomendação de Hospedagem:
-          <input
-            type="text"
-            value={recomendacaoHospedagem}
-            onChange={(e) => setRecomendacaoHospedagem(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>
-          Datas:
-          <input
-            type="text"
-            value={dataInicio}
-            onChange={(e) => setDataInicio(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>
-          Preferências de Atividades:
-          <input
-            type="text"
-            value={preferenciasAtividades}
-            onChange={(e) => setPreferenciasAtividades(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>
-          Orçamento Disponível:
-          <input
-            type="text"
-            value={orcamentoDisponivel}
-            onChange={(e) => setOrcamentoDisponivel(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>
-          Necessidades Especiais:
-          <input
-            type="text"
-            value={necessidadesEspeciais}
-            onChange={(e) => setNecessidadesEspeciais(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <button type="submit">Gerar Roteiro</button>
-      </form>
+    <Provider>
+      <main className={fontStyle.className}>
+        <div className="flex min-h-screen flex-col bg-gradient-to-r from-slate-900 to-slate-700">
+          <LoadScript
+            googleMapsApiKey={'AIzaSyBtVM3Hv__-aJLFy76gC7A2AaQpYKG-1_U'}
+            libraries={['places']}
+          >
+            {!itineraryInfo ? (
+              <div className="Body">
+                <div className="Box-Foto">
+                  <div className="logo">
+                    <img src="/img/logo.png" alt="Travel with AI Logo" />
+                  </div>
 
-      {roteiro && (
-        <div>
-          <h2>Roteiro Gerado:</h2>
-          <pre>{roteiro}</pre>
+                  <div className="form">
+                    <ItineraryForm setItineraryInfo={setItineraryInfo} />
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="flex  justify-center items-center w-full">
+                <Card className="w-full m-12">
+                  {
+                    <Itinerary
+                      itineraryInfo={itineraryInfo}
+                      setItineraryInfo={setItineraryInfo}
+                    />
+                  }
+                </Card>
+              </div>
+            )}
+          </LoadScript>
         </div>
-      )}
-    </div>
+      </main>
+    </Provider>
   );
 }
