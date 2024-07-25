@@ -60,9 +60,6 @@ const Map = ({
 
 
 
-    console.log('itinerary:', itinerary)
-    console.log('morningLatLogs:', morningLatLogs)
-    console.log('allItineraryLatLongs:', allItineraryLatLongs)
   const { data: itineraryCoordinates } = useQuery({
     queryKey: [`get-directions-${itinerary}-itinerary-${currentDayOfWeek}`],
     queryFn: () => getDirections({ latLongs: allItineraryLatLongs }),
@@ -73,7 +70,6 @@ const Map = ({
       )
     : null;
 
-    console.log('itineraryCoordinates:', itineraryCoordinates)
   const AccomodationIcon = new L.Icon({
     iconUrl: `/markers/accomodation.svg`,
     iconRetinaUrl: `/markers/accomodation.svg`,
