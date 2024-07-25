@@ -102,7 +102,7 @@ export default function Itinerary({ itineraryInfo, setItineraryInfo }: Props) {
       )}
 
       <div className="flex w-full gap-5 h-full">
-        <div className="w-[45%] flex flex-col gap-3">
+        <div className="w-[65%] flex flex-col gap-3">
           {loading || !itinerary ? (
             <Skeleton.Input
               style={{
