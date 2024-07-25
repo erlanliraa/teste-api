@@ -18,7 +18,7 @@ import { mocked_response } from '@/mock_response';
 
 interface Props {
   itineraryInfo: FieldType | null;
-  setItineraryInfo: (itineraryInfo: any) => void;
+  setItineraryInfo: (itineraryInfo: FieldType | null) => void;
 }
 
 export default function Itinerary({ itineraryInfo, setItineraryInfo }: Props) {
