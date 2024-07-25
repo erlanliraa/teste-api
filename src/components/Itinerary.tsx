@@ -49,7 +49,7 @@ export default function Itinerary({ itineraryInfo, setItineraryInfo }: Props) {
 
   const { data: itinerary, isFetching: loading } = useQuery({
     queryKey: [`get-itinerary`],
-    queryFn: () => getItinerary(),
+    queryFn: async () => await getItinerary(),
     refetchOnWindowFocus: false,
   });
 
@@ -64,9 +64,6 @@ export default function Itinerary({ itineraryInfo, setItineraryInfo }: Props) {
   const filteredItinerary = itinerary?.itinerary?.find(
     (day) => day.date_day === currentDayOfWeek
   );
-  console.log('itinerary?.itinerary:', itinerary?.itinerary);
-  console.log('filteredItinerary:', filteredItinerary);
-  console.log('currentDayOfWeek:', currentDayOfWeek);
   if (!loading && !itinerary) {
     return (
       <div className="m-12 flex items-center justify-center">

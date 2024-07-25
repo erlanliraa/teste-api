@@ -65,9 +65,6 @@ const ItineraryForm: React.FC<Props> = ({ setItineraryInfo }) => {
     setSliderInputValue(newValue as number);
   };
 
-  const handleChangePrefferedTravelStyle = (value: string) => {
-    console.log(`selected ${value}`);
-  };
   const { RangePicker } = DatePicker;
 
   const onLoad = (autoC: google.maps.places.Autocomplete) => {
@@ -130,7 +127,6 @@ const ItineraryForm: React.FC<Props> = ({ setItineraryInfo }) => {
               value={address}
               onChange={(e) => {
                 const newValue = e.target.value;
-                console.log('newValue:', newValue);
                 setAddress(newValue);
                 form.setFieldsValue({ destination: newValue });
               }}
@@ -174,7 +170,6 @@ const ItineraryForm: React.FC<Props> = ({ setItineraryInfo }) => {
             dropdownStyle={{
               zIndex: 100000,
             }}
-            onChange={handleChangePrefferedTravelStyle}
             options={Object.entries(travelStyleOptions).map(
               ([value, label]) => ({
                 value,
