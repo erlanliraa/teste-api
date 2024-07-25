@@ -141,7 +141,8 @@ async function generateRoteiro(
   }
 }
 
-// Funcao POST que o front realiza a reuqisição, ela é a "main"
+export const maxDuration = 60;
+export const dynamic = 'force-dynamic';
 export async function POST(request: Request): Promise<NextResponse> {
   const {
     travel_period,
