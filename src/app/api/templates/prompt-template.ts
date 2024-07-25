@@ -328,7 +328,7 @@ export const toolsBudget = {
                   "description": "Average total expenditure"
               }
           },
-          "required": ["alimentacao", "ingressos", "transporte", "extrasCompras", "total"]
+          "required": ["alimentacao", "ingressos", "transporte", "total"]
       }
   }
 };

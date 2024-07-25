@@ -115,6 +115,7 @@ export default function Itinerary({ itineraryInfo, setItineraryInfo }: Props) {
             <Budget
               data={itinerary.budget_for_all_days}
               budget={itineraryInfo?.budget}
+              symbol={itinerary.local_currency_symbol}
             />
           )}
 

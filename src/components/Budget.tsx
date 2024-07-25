@@ -5,7 +5,7 @@ interface Props {
   data: BudgetForAllDays;
   budget?: string;
 }
-export function Budget({ data, budget }: Props) {
+export function Budget({ data, budget, symbol }: Props) {
   const budgetItems: DescriptionsProps['items'] = [
     {
       key: 'Atividades',
@@ -41,7 +41,7 @@ export function Budget({ data, budget }: Props) {
       <Descriptions
         layout="vertical"
         bordered
-        title={`Orçamento de ${budget} para toda a viagem`}
+        title={`Orçamento de ${symbol} ${budget},00 para toda a viagem`}
         size="small"
         items={budgetItems}
       />
