@@ -81,7 +81,7 @@ const ItineraryForm: React.FC<Props> = ({ setItineraryInfo }) => {
     const data = {
       ...values,
       travel_period: (values.travel_period as any).map((date: Dayjs) =>
-        date.format('YYYY-MM-DD')
+        date.format('YYYY/MM/DD')
       ),
       preferred_travel_styles: preferredTravelStyles,
     };

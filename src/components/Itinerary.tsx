@@ -14,6 +14,7 @@ import { Alert, Skeleton } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { FieldType } from '@/components/Form';
 import { mocked_response } from '@/mock_response';
+import { format } from 'date-fns';
 // import { mocked_response as itinerary } from '@/mock_response';
 
 interface Props {
@@ -23,7 +24,7 @@ interface Props {
 
 export default function Itinerary({ itineraryInfo, setItineraryInfo }: Props) {
   const [map, setMap] = useState<L.Map | null>(null);
-
+  console.log('itineraryInfo:', itineraryInfo)
   const getItinerary = async () => {
     try {
       try {
@@ -41,6 +42,7 @@ export default function Itinerary({ itineraryInfo, setItineraryInfo }: Props) {
         return response;
       } catch (error) {
         alert('Erro ao buscar itinerário');
+        setItineraryInfo(null);
       }
     } catch (error) {
       console.error('Error:', error);

@@ -32,33 +32,33 @@ function formatTravelPlan(toolCalls: any[]): any {
     if (name === 'generate_detailed_itinerary') {
       for (const day of parsedArgs.days) {
         const formattedDay = {
-          date_day: day.date_day,
-          morning: day.morning.map((activity) => ({
-            activity: activity.activity,
-            description: activity.description,
-            address: activity.address,
-            time: activity.time,
+          date_day: day.data,
+          morning: day.manha.map((activity) => ({
+            activity: activity.atividade,
+            description: activity.descricao,
+            address: activity.local,
+            time: activity.horario,
             longitude: activity.longitude,
             latitude: activity.latitude,
-            average_cost: activity.average_cost,
+            average_cost: activity.custo_aproximado,
           })),
-          afternoon: day.afternoon.map((activity) => ({
-            activity: activity.activity,
-            description: activity.description,
-            address: activity.address,
-            time: activity.time,
+          afternoon: day.tarde.map((activity) => ({
+            activity: activity.atividade,
+            address: activity.local,
+            description: activity.descricao,
+            time: activity.horario,
             longitude: activity.longitude,
             latitude: activity.latitude,
-            average_cost: activity.average_cost,
+            average_cost: activity.custo_aproximado,
           })),
-          night: day.night.map((activity) => ({
-            activity: activity.activity,
-            description: activity.description,
-            address: activity.address,
-            time: activity.time,
+          night: day.noite.map((activity) => ({
+            activity: activity.atividade,
+            address: activity.local,
+            description: activity.descricao,
+            time: activity.horario,
             longitude: activity.longitude,
             latitude: activity.latitude,
-            average_cost: activity.average_cost,
+            average_cost: activity.custo_aproximado,
           })),
         };
         itinerary.itinerary.push(formattedDay);
@@ -66,35 +66,36 @@ function formatTravelPlan(toolCalls: any[]): any {
     } else if (name === 'generate_hosting_recommendations') {
       for (const recommendation of parsedArgs.recommendations) {
         itinerary.recommended_accommodations.push({
-          name: recommendation.name,
-          description: recommendation.description,
-          address: recommendation.address,
+          name: recommendation.nome,
+          description: recommendation.descricao,
+          address: recommendation.localizacao,
           latitude: recommendation.latitude,
           longitude: recommendation.longitude,
-          average_cost: recommendation.average_cost,
-          type: recommendation.type,
+          average_cost: recommendation.precoMedio,
+          comodidades: recommendation.comodidades,
+          type: recommendation.tipo,
         });
       }
     } else if (name === 'calculate_budget') {
       itinerary.budget_for_all_days = {
-        hosting_average_cost: parsedArgs.hosting_average_cost,
-        food_average_cost: parsedArgs.food_average_cost,
-        activities_average_cost: parsedArgs.activities_average_cost,
-        transportation_average_cost: parsedArgs.transportation_average_cost,
-        total_average_cost: parsedArgs.total_average_cost,
+        hosting_average_cost: parsedArgs.hospedagem,
+        food_average_cost: parsedArgs.alimentacao,
+        activities_average_cost: parsedArgs.atividades,
+        transportation_average_cost: parsedArgs.transporte,
+        total_average_cost: parsedArgs.total,
       };
     } else if (name === 'provide_travel_tips') {
       itinerary.tips_and_observations = parsedArgs.tips;
     } else if (name === 'provide_list_restaurants') {
       for (const recommendation of parsedArgs.recommendations) {
         itinerary.recommended_restaurants.push({
-          name: recommendation.name,
-          description: recommendation.description,
-          address: recommendation.address,
+          name: recommendation.nome,
+          description: recommendation.descricao,
+          address: recommendation.localizacao,
           latitude: recommendation.latitude,
           longitude: recommendation.longitude,
-          average_cost: recommendation.average_cost,
-          type: recommendation.type,
+          average_cost: recommendation.precoMedio,
+          type: recommendation.tipo,
         });
       }
     } else if (name === 'get_coin') {
@@ -118,23 +119,22 @@ async function generateRoteiro(
     const response = await openai.chat.completions.create({
       model: 'gpt-4o',
       messages: [{ role: 'user', content: prompt }],
-      // tools: [
-      //   toolsRoadMap,
-      //   toolsHost,
-      //   toolsBudget,
-      //   toolsTips,
-      //   toolsRestaurants,
-      //   toolsSymbol,
-      // ],
-      // tool_choice: 'required',
+      tools: [
+        toolsRoadMap,
+        toolsHost,
+        toolsBudget,
+        toolsTips,
+        toolsRestaurants,
+        toolsSymbol,
+      ],
+      tool_choice: "required"
     });
-    console.log('response:', response);
 
-    const parsedJson = (response.choices[0].message.content)
-    console.log('parsedJson:', parsedJson)
-    console.log('parsedJson:', parsedJson)
-    const json_output = response.choices[0]?.message.tool_calls || [];
-    return JSON.parse(parsedJson);
+    const json_output = formatTravelPlan(
+      response.choices[0]?.message.tool_calls || []
+    );
+
+    return json_output;
   } catch (error) {
     console.error('Erro ao gerar o roteiro:', error);
     throw error;
@@ -172,8 +172,9 @@ export async function POST(request: Request): Promise<NextResponse> {
     .replace('{budget}', budget)
     .replace('{destination}', destination)
     .replace('{preferred_travel_styles}', preferred_travel_styles)
-    .replace('{expected_json_schema}', JSON.stringify(expectedJsonSchema));
-  console.log('prompt:', prompt);
+    .replace('{expected_json_schema}', expectedJsonSchema);
+    
+
   try {
     const response_json = await generateRoteiro(prompt, api_openai);
     console.log(response_json);
