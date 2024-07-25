@@ -3,6 +3,7 @@ export interface Atividade {
     atividade: string;
     local: string;
     horario: string;
+    descricao: string;
     custo_aproximado: string;
   }
   
@@ -45,10 +46,10 @@ export interface RoteiroResponse {
 }
   
 export interface ApiRequestBody {
-    travel_period: string;
+    travel_period: string[];
     budget: string;
     destination: string;
-    preferred_travel_styles: string;
+    preferred_travel_styles: string[]
     api_openai: string;
     api_google_maps: string;
 }

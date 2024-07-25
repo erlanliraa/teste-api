@@ -20,7 +20,7 @@ import Marker from './Marker';
 
 interface Props {
   itinerary?: Partial<ItineraryDay>;
-  currentDayOfWeek: string;
+  currentDayOfWeek?: string;
   accomodations: Recommendations[];
   restaurants: Recommendations[];
   map: L.Map | null;
@@ -58,6 +58,11 @@ const Map = ({
     .map((d) => d.join(','))
     .join(';');
 
+
+
+    console.log('itinerary:', itinerary)
+    console.log('morningLatLogs:', morningLatLogs)
+    console.log('allItineraryLatLongs:', allItineraryLatLongs)
   const { data: itineraryCoordinates } = useQuery({
     queryKey: [`get-directions-${itinerary}-itinerary-${currentDayOfWeek}`],
     queryFn: () => getDirections({ latLongs: allItineraryLatLongs }),
@@ -68,6 +73,7 @@ const Map = ({
       )
     : null;
 
+    console.log('itineraryCoordinates:', itineraryCoordinates)
   const AccomodationIcon = new L.Icon({
     iconUrl: `/markers/accomodation.svg`,
     iconRetinaUrl: `/markers/accomodation.svg`,

@@ -27,8 +27,18 @@ export default function Itinerary({ itineraryInfo, setItineraryInfo }: Props) {
   const getItinerary = async () => {
     try {
       try {
-        const result = await axios.post('/api/generate-roadmap', itineraryInfo);
-        return result.data as ItineraryResponse;
+        const result = await axios.post('/api/generate-roadmap', {
+          ...itineraryInfo,
+          preferred_travel_styles: Object.values(
+            itineraryInfo?.preferred_travel_styles ?? []
+          ),
+        });
+
+        const response = result.data as ItineraryResponse;
+
+        setCurrentDayOfWeek(response.itinerary[0].date_day);
+
+        return response;
       } catch (error) {
         alert('Erro ao buscar itinerário');
       }
@@ -40,17 +50,23 @@ export default function Itinerary({ itineraryInfo, setItineraryInfo }: Props) {
   const { data: itinerary, isFetching: loading } = useQuery({
     queryKey: [`get-itinerary`],
     queryFn: () => getItinerary(),
+    refetchOnWindowFocus: false,
   });
 
   // const loading = false;
   // const itinerary = mocked_response;
-  const [currentDayOfWeek, setCurrentDayOfWeek] = React.useState(
-    mocked_response.itinerary[0].date_day
-  );
+  const [currentDayOfWeek, setCurrentDayOfWeek] = React.useState('');
+  
   const onChangeItineraryDaysTab = (currrentDayOfWeek: string) => {
     setCurrentDayOfWeek(currrentDayOfWeek);
   };
 
+  const filteredItinerary = itinerary?.itinerary?.find(
+    (day) => day.date_day === currentDayOfWeek
+  );
+  console.log('itinerary?.itinerary:', itinerary?.itinerary);
+  console.log('filteredItinerary:', filteredItinerary);
+  console.log('currentDayOfWeek:', currentDayOfWeek);
   if (!loading && !itinerary) {
     return (
       <div className="m-12 flex items-center justify-center">
@@ -144,9 +160,7 @@ export default function Itinerary({ itineraryInfo, setItineraryInfo }: Props) {
                 map={map}
                 setMap={setMap}
                 currentDayOfWeek={currentDayOfWeek}
-                itinerary={itinerary?.itinerary?.find(
-                  (day) => day.date_day === currentDayOfWeek
-                )}
+                itinerary={filteredItinerary}
                 accomodations={itinerary.recommended_accommodations}
                 restaurants={itinerary.recommended_restaurants}
               />

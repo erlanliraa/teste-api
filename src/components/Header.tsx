@@ -1,4 +1,3 @@
-import { ItineraryResponse } from '@/types';
 import { Description } from '@/utils/description';
 import { Card, Tag } from 'antd';
 import { formatDate } from 'date-fns';
@@ -8,7 +7,7 @@ interface Props {
   travelPeriod?: string;
   localCurrency: string;
   localCurrencySymbol: string;
-  travelStyles?: string[];
+  travelStyles?: { [key: string]: string };
   setItineraryInfo: (itineraryInfo: any) => void;
 }
 
@@ -59,7 +58,7 @@ export function Header({
         label="Estilos de viagem preferidos"
         labelFontsize="1rem"
         valueFontsize="1rem"
-        value={travelStyles?.map((style, index) => (
+        value={Object.keys(travelStyles ?? [])?.map((style, index) => (
           <Tag color={colors[index]} key={index}>
             {style}
           </Tag>

@@ -27,6 +27,7 @@ O JSON deve seguir a estrutura abaixo:
             "data": "Data do dia n",
             "manha": [
                 {
+                  descricao: "Breve descrição do destino e os tipos de atividades que podem ser feitas lá nos dias do itinerário",
                   "atividade": "Nome da atividade",
                   "local": "Localização da atividade",
                   "horario": "Horário da atividade",
@@ -36,6 +37,7 @@ O JSON deve seguir a estrutura abaixo:
               ],
             "tarde": [
                 {
+                "descricao": "Breve descrição do destino e os tipos de atividades que podem ser feitas lá nos dias do itinerário",
                   "atividade": "Nome da atividade",
                   "local": "Localização da atividade",
                   "horario": "Horário da atividade",
@@ -45,6 +47,7 @@ O JSON deve seguir a estrutura abaixo:
               ],
             "noite": [
                 {
+                "descricao": "Breve descrição do destino e os tipos de atividades que podem ser feitas lá nos dias do itinerário",
                   "atividade": "Nome da atividade",
                   "local": "Localização da atividade",
                   "horario": "Horário da atividade",
@@ -123,6 +126,10 @@ export const toolsRoadMap = {
                                           "type": "string",
                                           "description": "Name of the place to be visited"
                                       },
+                                      "descricao": {
+                                        "type": "string",
+                                        "description": "A brief description of the destination and the types of activities that can be done there"
+                                       },
                                       "local": {
                                           "type": "string",
                                           "description": "Activity address"
@@ -144,7 +151,7 @@ export const toolsRoadMap = {
                                           "description": "Approximate cost of the activity"
                                       }
                                   },
-                                  "required": ["atividade", "local", "latitude", "longitude", "horario"]
+                                  "required": ["atividade", "local", "latitude", "longitude", "horario", "descricao"]
                               }
                           },
                           "tarde": {
@@ -157,6 +164,10 @@ export const toolsRoadMap = {
                                           "type": "string",
                                           "description": "Name of the place to be visited"
                                       },
+                                      "descricao": {
+                                        "type": "string",
+                                        "description": "A brief description of the destination and the types of activities that can be done there"
+                                       },
                                       "local": {
                                           "type": "string",
                                           "description": "Activity address"
@@ -178,7 +189,7 @@ export const toolsRoadMap = {
                                           "description": "Approximate cost of the activity"
                                       }
                                   },
-                                  "required": ["atividade", "local", "latitude", "longitude", "horario"]
+                                  "required": ["atividade", "local", "latitude", "longitude", "horario", "descricao"]
                               }
                           },
                           "noite": {
@@ -191,6 +202,10 @@ export const toolsRoadMap = {
                                           "type": "string",
                                           "description": "Name of the place to be visited"
                                       },
+                                      "descricao": {
+                                        "type": "string",
+                                        "description": "A brief description of the destination and the types of activities that can be done there"
+                                       },
                                       "local": {
                                           "type": "string",
                                           "description": "Activity address"
@@ -212,7 +227,7 @@ export const toolsRoadMap = {
                                           "description": "Approximate cost of the activity"
                                       }
                                   },
-                                  "required": ["atividade", "local", "latitude", "longitude", "horario"]
+                                  "required": ["atividade", "local", "latitude", "longitude", "horario", "descricao"]
                               }
                           }
                       },

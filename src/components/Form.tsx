@@ -19,7 +19,7 @@ export type FieldType = {
   travel_period: string;
   budget: string;
   destination: string;
-  preferred_travel_styles: string[];
+  preferred_travel_styles: { [key: string]: string };
   api_openai: string;
 };
 
@@ -74,14 +74,20 @@ const ItineraryForm: React.FC<Props> = ({ setItineraryInfo }) => {
     setAutocomplete(autoC);
   };
 
-  const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
+  const onFinish: FormProps<any>['onFinish'] = async (values) => {
+    const preferredTravelStyles = Object.fromEntries(
+      Object.entries(travelStyleOptions).filter(([value]) =>
+        values.preferred_travel_styles.includes(value)
+      )
+    );
+
     const data = {
       ...values,
       travel_period: (values.travel_period as any).map((date: Dayjs) =>
         date.format('YYYY-MM-DD')
       ),
+      preferred_travel_styles: preferredTravelStyles,
     };
-
     setItineraryInfo(data);
   };
 
@@ -116,7 +122,7 @@ const ItineraryForm: React.FC<Props> = ({ setItineraryInfo }) => {
           className="form-item"
         >
           <Autocomplete
-            fields={['formatted_address', 'geometry', 'name']}
+            fields={['formatted_address', 'geometry', 'name', 'state']}
             onLoad={onLoad}
             onPlaceChanged={onPlaceChanged}
           >
@@ -124,6 +130,7 @@ const ItineraryForm: React.FC<Props> = ({ setItineraryInfo }) => {
               value={address}
               onChange={(e) => {
                 const newValue = e.target.value;
+                console.log('newValue:', newValue);
                 setAddress(newValue);
                 form.setFieldsValue({ destination: newValue });
               }}
@@ -164,16 +171,33 @@ const ItineraryForm: React.FC<Props> = ({ setItineraryInfo }) => {
             style={{ width: '100%' }}
             maxCount={3}
             placeholder="Escolha seu tipo de viagem..."
+            dropdownStyle={{
+              zIndex: 100000,
+            }}
             onChange={handleChangePrefferedTravelStyle}
             options={Object.entries(travelStyleOptions).map(
-              ([label, value]) => ({
-                label,
+              ([value, label]) => ({
                 value,
+                key: value,
+                title: label,
               })
             )}
             optionRender={(option) => (
-              <Tooltip placement="top" title={option.data.value}>
-                <Space>{option.label}</Space>
+              <Tooltip
+                autoAdjustOverflow
+                overlayStyle={{
+                  zIndex: 100000,
+                }}
+                overlayInnerStyle={{
+                  transform: 'translate(100px, 300px)',
+                }}
+                style={{}}
+                className="w-full"
+                placement="left"
+                arrow={false}
+                title={option.data.title}
+              >
+                <Space style={{}}> {option.value}</Space>
               </Tooltip>
             )}
             className="custom-input-dropdown"
@@ -192,9 +216,6 @@ const ItineraryForm: React.FC<Props> = ({ setItineraryInfo }) => {
         <Form.Item<FieldType>
           label="Orçamento"
           name="budget"
-          rules={[
-            { required: true, message: 'Por favor selecione seu orçamento!' },
-          ]}
           className="form-item"
         >
           <Slider
@@ -202,7 +223,13 @@ const ItineraryForm: React.FC<Props> = ({ setItineraryInfo }) => {
             max={20000}
             onChange={onChangeSlider}
             value={typeof sliderInputValue === 'number' ? sliderInputValue : 0}
-            tooltip={{ open: true, formatter: (value) => `R$${value},00` }}
+            tooltip={{
+              open: true,
+              style: {
+                zIndex: 1,
+              },
+              formatter: (value) => `R$${value},00`,
+            }}
             className="custom-slider"
           />
         </Form.Item>
