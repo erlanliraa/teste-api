@@ -20,17 +20,20 @@ interface Props {
   itineraryInfo: FieldType | null;
   setItineraryInfo: (itineraryInfo: any) => void;
 }
+
 export default function Itinerary({ itineraryInfo, setItineraryInfo }: Props) {
   const [map, setMap] = useState<L.Map | null>(null);
+
   const getItinerary = async () => {
     try {
-      const result = await axios.post(
-        'http://127.0.0.1:5000/generate-itinerary',
-        itineraryInfo
-      );
-      return result.data as ItineraryResponse;
+      try {
+        const result = await axios.post('/api/generate-roadmap', itineraryInfo);
+        return result.data as ItineraryResponse;
+      } catch (error) {
+        alert('Erro ao buscar itinerário');
+      }
     } catch (error) {
-      alert('Erro ao buscar itinerário');
+      console.error('Error:', error);
     }
   };
 
@@ -38,7 +41,7 @@ export default function Itinerary({ itineraryInfo, setItineraryInfo }: Props) {
     queryKey: [`get-itinerary`],
     queryFn: () => getItinerary(),
   });
-  
+
   // const loading = false;
   // const itinerary = mocked_response;
   const [currentDayOfWeek, setCurrentDayOfWeek] = React.useState(

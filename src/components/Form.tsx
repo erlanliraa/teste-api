@@ -19,8 +19,8 @@ export type FieldType = {
   travel_period: string;
   budget: string;
   destination: string;
-  preferred_travel_styles: string[] | string;
-  api_key: string;
+  preferred_travel_styles: string[];
+  api_openai: string;
 };
 
 const travelStyleOptions = {
@@ -83,33 +83,6 @@ const ItineraryForm: React.FC<Props> = ({ setItineraryInfo }) => {
     };
 
     setItineraryInfo(data);
-    
-    try {
-      values = {
-        ...values,
-        preferred_travel_styles: values.preferred_travel_styles.join(' '),
-        travel_period: (values.travel_period).join(' até '),
-      }
-  
-      const response = await fetch('/api/generate-roadmap', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          travel_period: values.travel_period,
-          budget: values.budget,
-          destination: values.destination,
-          preferred_travel_styles: values.preferred_travel_styles,
-          api_openai: values.api_key,
-        }),
-      });
-    
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error('Error:', error);
-    }
   };
 
   const onPlaceChanged = () => {
@@ -209,7 +182,7 @@ const ItineraryForm: React.FC<Props> = ({ setItineraryInfo }) => {
         <Form.Item<FieldType>
           className="form-item"
           label="Api Key"
-          name="api_key"
+          name="api_openai"
           rules={[
             { required: true, message: 'Por favor selecione a api key!' },
           ]}
